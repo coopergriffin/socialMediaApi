@@ -17,7 +17,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Connect to MongoDB
 
-mongoose.connect('mongodb://localhost:27017/yourDatabaseName', {
+mongoose.connect('mongodb://localhost:27017/socialMediaApi', {
 
   useNewUrlParser: true,
 
@@ -49,6 +49,5 @@ app.listen(PORT, () => {
 
   console.log(`Server running on http://localhost:${PORT}`);
 
-  console.log(`You can open the link directly in your browser: http://localhost:${PORT}`);
 
 });
