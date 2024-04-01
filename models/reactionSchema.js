@@ -8,7 +8,6 @@ const ReactionSchema = new Schema({
   reactionId: {
 
     type: Schema.Types.ObjectId,
-
     default: () => new Types.ObjectId()
 
   },
@@ -16,9 +15,7 @@ const ReactionSchema = new Schema({
   reactionBody: {
 
     type: String,
-
     required: true,
-
     maxlength: 280
 
   },
@@ -26,7 +23,6 @@ const ReactionSchema = new Schema({
   username: {
 
     type: String,
-
     required: true
 
   },
@@ -34,9 +30,7 @@ const ReactionSchema = new Schema({
   createdAt: {
 
     type: Date,
-
     default: Date.now,
-
     get: createdAtVal => createdAtVal.toISOString()
 
   }

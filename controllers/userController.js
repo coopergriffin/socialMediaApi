@@ -66,41 +66,65 @@ const deleteUser = async (req, res) => {
   }
 };
 
-// Add a friend to a user's friend list
-const addFriend = async (req, res) => {
-  try {
-    const user = await User.findByIdAndUpdate(
-      req.params.id,
-      { $addToSet: { friends: req.params.friendId } },
-      { new: true }
-    );
-    if (!user) {
-      res.status(404).json({ message: 'No user found with this id!' });
-      return;
-    }
-    res.json(user);
-  } catch (error) {
-    res.status(400).json(error);
-  }
-};
+// Add a friend to a user's friend list and vice versa for mutual friendship
 
-// Remove a friend from a user's friend list
-const removeFriend = async (req, res) => {
-  try {
-    const user = await User.findByIdAndUpdate(
-      req.params.id,
-      { $pull: { friends: req.params.friendId } },
-      { new: true }
-    );
-    if (!user) {
-      res.status(404).json({ message: 'No user found with this id!' });
-      return;
+const addFriend = async (req, res) => {
+
+    try {
+  
+      // Add friendId to the user's friend list
+      const user = await User.findByIdAndUpdate(
+  
+        req.params.id,
+  
+        { $addToSet: { friends: req.params.friendId } },
+  
+        { new: true }
+  
+      );
+      // Add userId to the friend's friend list
+  
+      const friend = await User.findByIdAndUpdate(
+        req.params.friendId,
+        { $addToSet: { friends: req.params.id } },
+        { new: true }
+      );
+      if (!user || !friend) {
+  
+        res.status(404).json({ message: 'User not found' });
+        return;
+      }
+      res.json({ message: 'Friend added successfully' });
+    } catch (error) {
+      res.status(400).json(error);
     }
-    res.json(user);
-  } catch (error) {
-    res.status(400).json(error);
-  }
-};
+  };
+
+// Remove a friend from a user's friend list and vice versa for mutual friendship
+const removeFriend = async (req, res) => {
+    try {
+      // Remove friendId from the user's friend list
+      const user = await User.findByIdAndUpdate(
+        req.params.id,
+        { $pull: { friends: req.params.friendId } },
+        { new: true }
+      );
+      
+      // Remove userId from the friend's friend list
+      const friend = await User.findByIdAndUpdate(
+        req.params.friendId,
+        { $pull: { friends: req.params.id } },
+        { new: true }
+      );
+      if (!user || !friend) {
+        res.status(404).json({ message: 'User not found' });
+        return;
+      }
+      res.json({ message: 'Friend removed successfully' });
+    } catch (error) {
+      res.status(400).json(error);
+    }
+  };
 
 module.exports = {
   createUser,

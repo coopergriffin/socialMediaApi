@@ -1,5 +1,6 @@
 //Cooper Griffin 
 //March 25th 2024
+//Controller file for thought model
 
 const Thought = require('../models/thought');
 const User = require('../models/user');

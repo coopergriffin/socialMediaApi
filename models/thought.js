@@ -1,3 +1,6 @@
+//Cooper Griffin 
+//March 25th 2024
+
 const { Schema, model, Types } = require('mongoose');
 
 const reactionSchema = require('./reactionSchema');
@@ -10,11 +13,8 @@ const ThoughtSchema = new Schema({
   thoughtText: {
 
     type: String,
-
     required: true,
-
     minlength: 1,
-
     maxlength: 280
 
   },
@@ -22,9 +22,7 @@ const ThoughtSchema = new Schema({
   createdAt: {
 
     type: Date,
-
     default: Date.now,
-
     get: createdAtVal => createdAtVal.toISOString()
 
   },
@@ -32,7 +30,6 @@ const ThoughtSchema = new Schema({
   username: {
 
     type: String,
-
     required: true
 
   },
